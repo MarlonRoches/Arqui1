@@ -1,0 +1,19 @@
+CHIP miALU {
+
+    IN input[16];
+    //Bits De Control:
+    zx, // true: x=0
+    nx, // true: x!=0
+    zy, // true: y=0
+    ny, // true: x!=0
+    f,  // if f == true : out =x+y ? out =xANDy
+    no; // out !=out 
+    
+    OUT out[16];
+     // ALU banderas de salida
+     zr, // 1 if out=0, 0 otherwise
+     ng; // 1 if out<0, 0 otherwise
+
+    PARTS:
+    // Code here
+}

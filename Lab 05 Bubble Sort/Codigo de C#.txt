@@ -1,0 +1,80 @@
+    static void Main(string[] args) 
+        {
+            var LargoArray = 5;
+            var Codigo2Direcciones = "";
+            var contadorRondas=0;
+            var contadorA=7;
+            for (int j = LargoArray - 1; j >= 0; j--)
+            {
+                for (int i = contadorRondas; i < LargoArray ; i++)
+                {
+                    if ((i) == LargoArray-1)
+                    {
+                        contadorA += 7;
+                        contadorRondas++;
+                        break;
+                    }
+                    ////leo el primer dato
+                    Codigo2Direcciones += $"@{i}\n";
+                    Codigo2Direcciones += $"D = M\n";
+                    ////lo guardo en el aux
+                    Codigo2Direcciones += $"@Aux1\n";
+                    Codigo2Direcciones += $"M = D\n";
+                    ////leo el Segundo dato
+                    Codigo2Direcciones += $"@{i+1}\n";
+                    Codigo2Direcciones += $"D = M\n";
+                    ////Guardo el segundo dato
+                    Codigo2Direcciones += $"@Aux2\n";
+                    Codigo2Direcciones += $"M = D\n";
+                    //Leo Aux 1
+                    Codigo2Direcciones += $"@Aux1\n";
+                    Codigo2Direcciones += $"D = M\n";
+                    //preparo primer dato
+                    Codigo2Direcciones += $"@diferencia\n";
+                    Codigo2Direcciones += $"M = D\n";
+                    //Leo Aux 2
+                    Codigo2Direcciones += $"@Aux2\n";
+                    Codigo2Direcciones += $"D = M\n";
+
+                    //Calculo la diferencia
+                    Codigo2Direcciones += $"@diferencia\n";
+                    Codigo2Direcciones += $"M = M - D\n";
+                    //+x  = es mayor; -x = es menor
+                    // guardamos el dato en D
+                    Codigo2Direcciones += $"D = M\n";
+
+
+                    // 
+                    Codigo2Direcciones += $"//   '''''''''''''''''' PARTE DEL IF ''''''''''''''''''''''\n";
+
+                    Codigo2Direcciones += $"@Positiva{i + contadorRondas +10}\n";
+                    Codigo2Direcciones += $"D; JGT\n";
+                    //Parte negativa
+                    Codigo2Direcciones += $"@A{i + contadorA}\n";
+
+                    Codigo2Direcciones += $"//SIGUIENTE COMPARACION, RAM[{i}] vs RAM[{i+1}]\n";
+                    Codigo2Direcciones += $"D; JMP\n";
+
+                    //Parte Positiva
+                    Codigo2Direcciones += $"(Positiva{i+contadorRondas +10})\n";
+                    Codigo2Direcciones += $"// HACEMOS SWITCH\n";
+                    Codigo2Direcciones += $"@Aux2\n";
+                    Codigo2Direcciones += $"D = M\n";
+                    Codigo2Direcciones += $"@{i}\n";
+                    Codigo2Direcciones += $"M = D\n";
+                    Codigo2Direcciones += $"@Aux1\n";
+                    Codigo2Direcciones += $"D = M\n";
+                    Codigo2Direcciones += $"@{i+1}\n";
+                   
+                    Codigo2Direcciones += $"M = D\n";
+                    Codigo2Direcciones += $"@A{i + contadorA}\n";
+                    Codigo2Direcciones += $"0; JMP\n";
+                    Codigo2Direcciones += $"(A{i + contadorA})\n";
+                    Codigo2Direcciones += $"//*+*+*+*+ Sort De [{i}] vs [{i+1}] COMPLETADA\n";
+                    contadorA += 7;
+                    contadorRondas++;
+
+                }
+                Codigo2Direcciones += $"//--------------------- RONDA No. {contadorRondas} COMPLETADA\n";
+            }
+        }

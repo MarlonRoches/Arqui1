@@ -1,0 +1,18 @@
+CHIP SixTeenPos {
+
+    IN in[8], flag, addressBit, address8Pos[3];
+    OUT out[8];
+
+    PARTS:
+    // Put your code here:
+
+    DMux(in=flag, sel=addressBit, a=a, b=b);  
+  //2 registros de 8 =  16 Bits
+    OchoPos(in = in,flag = a, address = address8Pos,out = outa);
+    OchoPos(in = in,flag = b, address = address8Pos,out = outb);
+    
+    //mu
+    Mux8(a=outa,b=outb,sel=addressBit, out = out );
+    
+    // Mux8Way16(a = outa,b = outb,c = outc,d = outd,e = oute,f = outf,g = outg,h = outh,sel = address[3..5],out = out);
+}

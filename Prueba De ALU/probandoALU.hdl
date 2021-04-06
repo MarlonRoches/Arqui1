@@ -1,0 +1,22 @@
+// probando alu
+CHIP probandoALU {
+
+    IN x[16], y[16],
+    //Bits De Control:
+    zx, // true: x=0
+    nx, // true: x!=0
+    zy, // true: y=0
+    ny, // true: y!=0
+    f,  // if f == true : out =x+y ? out =xANDy
+    no; // out !=out 
+    
+    OUT out[16],
+     // ALU banderas de salida
+     zr, // 1 if out=0, 0 otherwise
+     ng; // 1 if out<0, 0 otherwise
+    
+     PARTS:
+    // Code here
+    ALU(x=x,      y=y,      zx=zx,      nx=nx,      zy=zy,      ny=ny,           f=f,            no=no,         out=out, zr=zr,        ng=ng);
+    // ALU(x=inputX, y=inputY, zx=zeroX,   nx=negateX, ny=negateY, f=AddOrAddition, no=negateOut, out=out, zr=outIsZero, ng=OutNegitive); 
+}

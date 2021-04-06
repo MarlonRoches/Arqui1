@@ -1,0 +1,60 @@
+// AND 16 bits 2 entradas
+CHIP AND1250918 {
+    // 
+    IN a[16],b[16];
+    OUT out[16];
+
+     PARTS:
+    // Code here
+    
+        //Bit Num. 0
+Nand(a = a[0], b = b[0] ,out= AB0);
+Nand(a=AB0, b=AB0 ,out= out[0]);
+//Bit Num. 1
+Nand(a = a[1], b = b[1] ,out= AB1);
+Nand(a=AB1, b=AB1 ,out= out[1]);
+//Bit Num. 2
+Nand(a = a[2], b = b[2] ,out= AB2);
+Nand(a=AB2, b=AB2 ,out= out[2]);
+//Bit Num. 3
+Nand(a = a[3], b = b[3] ,out= AB3);
+Nand(a=AB3, b=AB3 ,out= out[3]);
+//Bit Num. 4
+Nand(a = a[4], b = b[4] ,out= AB4);
+Nand(a=AB4, b=AB4 ,out= out[4]);
+//Bit Num. 5
+Nand(a = a[5], b = b[5] ,out= AB5);
+Nand(a=AB5, b=AB5 ,out= out[5]);
+//Bit Num. 6
+Nand(a = a[6], b = b[6] ,out= AB6);
+Nand(a=AB6, b=AB6 ,out= out[6]);
+//Bit Num. 7
+Nand(a = a[7], b = b[7] ,out= AB7);
+Nand(a=AB7, b=AB7 ,out= out[7]);
+//Bit Num. 8
+Nand(a = a[8], b = b[8] ,out= AB8);
+Nand(a=AB8, b=AB8 ,out= out[8]);
+//Bit Num. 9
+Nand(a = a[9], b = b[9] ,out= AB9);
+Nand(a=AB9, b=AB9 ,out= out[9]);
+//Bit Num. 10
+Nand(a = a[10], b = b[10] ,out= AB10);
+Nand(a=AB10, b=AB10 ,out= out[10]);
+//Bit Num. 11
+Nand(a = a[11], b = b[11] ,out= AB11);
+Nand(a=AB11, b=AB11 ,out= out[11]);
+//Bit Num. 12
+Nand(a = a[12], b = b[12] ,out= AB12);
+Nand(a=AB12, b=AB12 ,out= out[12]);
+//Bit Num. 13
+Nand(a = a[13], b = b[13] ,out= AB13);
+Nand(a=AB13, b=AB13 ,out= out[13]);
+//Bit Num. 14
+Nand(a = a[14], b = b[14] ,out= AB14);
+Nand(a=AB14, b=AB14 ,out= out[14]);
+//Bit Num. 15
+Nand(a = a[15], b = b[15] ,out= AB15);
+Nand(a=AB15, b=AB15 ,out= out[15]);
+
+
+}

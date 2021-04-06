@@ -1,0 +1,16 @@
+CHIP Registro8 {
+    IN in[8], flag;
+    OUT out[8];
+
+    PARTS:
+    // 8 Bits de Memoria
+    Bit(in = in[0],load = flag,out = out[0]);
+    Bit(in = in[1],load = flag,out = out[1]);
+    Bit(in = in[2],load = flag,out = out[2]);
+    Bit(in = in[3],load = flag,out = out[3]);
+    Bit(in = in[4],load = flag,out = out[4]);
+    Bit(in = in[5],load = flag,out = out[5]);
+    Bit(in = in[6],load = flag,out = out[6]);
+    Bit(in = in[7],load = flag,out = out[7]);
+    
+}

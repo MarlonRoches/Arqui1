@@ -1,0 +1,106 @@
+CHIP XNOR1250918 {
+
+    IN a[16] , b[16];
+    OUT out[16];
+    PARTS:
+
+    //Bit Num. 0
+    Nand(a = a[0], b = a[0], out= SoloA0); 
+    Nand(a = b[0], b = b[0], out= SoloB0);
+    Nand(a = a[0], b = b[0], out= AB0);
+    Nand(a = SoloA0, b = SoloB0, out= AABB0);
+    Nand(a = AB0, b = AABB0, out=out[0]);
+    //Bit Num. 1
+    Nand(a = a[1], b = a[1], out= SoloA1); 
+    Nand(a = b[1], b = b[1], out= SoloB1);
+    Nand(a = a[1], b = b[1], out= AB1);
+    Nand(a = SoloA1, b = SoloB1, out= AABB1);
+    Nand(a = AB1, b = AABB1, out=out[1]);
+    //Bit Num. 2
+    Nand(a = a[2], b = a[2], out= SoloA2); 
+    Nand(a = b[2], b = b[2], out= SoloB2);
+    Nand(a = a[2], b = b[2], out= AB2);
+    Nand(a = SoloA2, b = SoloB2, out= AABB2);
+    Nand(a = AB2, b = AABB2, out=out[2]);
+    //Bit Num. 3
+    Nand(a = a[3], b = a[3], out= SoloA3); 
+    Nand(a = b[3], b = b[3], out= SoloB3);
+    Nand(a = a[3], b = b[3], out= AB3);
+    Nand(a = SoloA3, b = SoloB3, out= AABB3);
+    Nand(a = AB3, b = AABB3, out=out[3]);
+    //Bit Num. 4
+    Nand(a = a[4], b = a[4], out= SoloA4); 
+    Nand(a = b[4], b = b[4], out= SoloB4);
+    Nand(a = a[4], b = b[4], out= AB4);
+    Nand(a = SoloA4, b = SoloB4, out= AABB4);
+    Nand(a = AB4, b = AABB4, out=out[4]);
+    //Bit Num. 5
+    Nand(a = a[5], b = a[5], out= SoloA5); 
+    Nand(a = b[5], b = b[5], out= SoloB5);
+    Nand(a = a[5], b = b[5], out= AB5);
+    Nand(a = SoloA5, b = SoloB5, out= AABB5);
+    Nand(a = AB5, b = AABB5, out=out[5]);
+    //Bit Num. 6
+    Nand(a = a[6], b = a[6], out= SoloA6); 
+    Nand(a = b[6], b = b[6], out= SoloB6);
+    Nand(a = a[6], b = b[6], out= AB6);
+    Nand(a = SoloA6, b = SoloB6, out= AABB6);
+    Nand(a = AB6, b = AABB6, out=out[6]);
+    //Bit Num. 7
+    Nand(a = a[7], b = a[7], out= SoloA7); 
+    Nand(a = b[7], b = b[7], out= SoloB7);
+    Nand(a = a[7], b = b[7], out= AB7);
+    Nand(a = SoloA7, b = SoloB7, out= AABB7);
+    Nand(a = AB7, b = AABB7, out=out[7]);
+    //Bit Num. 8
+    Nand(a = a[8], b = a[8], out= SoloA8); 
+    Nand(a = b[8], b = b[8], out= SoloB8);
+    Nand(a = a[8], b = b[8], out= AB8);
+    Nand(a = SoloA8, b = SoloB8, out= AABB8);
+    Nand(a = AB8, b = AABB8, out=out[8]);
+    //Bit Num. 9
+    Nand(a = a[9], b = a[9], out= SoloA9); 
+    Nand(a = b[9], b = b[9], out= SoloB9);
+    Nand(a = a[9], b = b[9], out= AB9);
+    Nand(a = SoloA9, b = SoloB9, out= AABB9);
+    Nand(a = AB9, b = AABB9, out=out[9]);
+    //Bit Num. 10
+    Nand(a = a[10], b = a[10], out= SoloA10); 
+    Nand(a = b[10], b = b[10], out= SoloB10);
+    Nand(a = a[10], b = b[10], out= AB10);
+    Nand(a = SoloA10, b = SoloB10, out= AABB10);
+    Nand(a = AB10, b = AABB10, out=out[10]);
+    //Bit Num. 11
+    Nand(a = a[11], b = a[11], out= SoloA11); 
+    Nand(a = b[11], b = b[11], out= SoloB11);
+    Nand(a = a[11], b = b[11], out= AB11);
+    Nand(a = SoloA11, b = SoloB11, out= AABB11);
+    Nand(a = AB11, b = AABB11, out=out[11]);
+    //Bit Num. 12
+    Nand(a = a[12], b = a[12], out= SoloA12); 
+    Nand(a = b[12], b = b[12], out= SoloB12);
+    Nand(a = a[12], b = b[12], out= AB12);
+    Nand(a = SoloA12, b = SoloB12, out= AABB12);
+    Nand(a = AB12, b = AABB12, out=out[12]);
+    //Bit Num. 13
+    Nand(a = a[13], b = a[13], out= SoloA13); 
+    Nand(a = b[13], b = b[13], out= SoloB13);
+    Nand(a = a[13], b = b[13], out= AB13);
+    Nand(a = SoloA13, b = SoloB13, out= AABB13);
+    Nand(a = AB13, b = AABB13, out=out[13]);
+    //Bit Num. 14
+    Nand(a = a[14], b = a[14], out= SoloA14); 
+    Nand(a = b[14], b = b[14], out= SoloB14);
+    Nand(a = a[14], b = b[14], out= AB14);
+    Nand(a = SoloA14, b = SoloB14, out= AABB14);
+    Nand(a = AB14, b = AABB14, out=out[14]);
+    //Bit Num. 15
+    Nand(a = a[15], b = a[15], out= SoloA15); 
+    Nand(a = b[15], b = b[15], out= SoloB15);
+    Nand(a = a[15], b = b[15], out= AB15);
+    Nand(a = SoloA15, b = SoloB15, out= AABB15);
+    Nand(a = AB15, b = AABB15, out=out[15]);
+
+
+
+}
