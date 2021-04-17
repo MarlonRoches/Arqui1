@@ -1,11 +1,16 @@
+//Asignamos Valores Iniciales
+@Pos8
+
 //SI ES MAYOR, SALTA
 //MENOR, Sigue evaluando
-
 
 (Turno1)
 //Pedimos Valor
 @0
 D=M
+
+@aux
+M = 45
 
 @SeCumple
 D;JGT

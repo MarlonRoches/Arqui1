@@ -1,0 +1,71 @@
+---------------------------------------------
+PIC ASSEMBLER LISTING
+Line    Address Opcode  Instruction
+---------------------------------------------
+0001    0000            ;CONFIGURACIÓN
+0002    0000            
+0003    0000            DATO EQU 0x21
+0004    0000            
+0005    0000            ;INICIO DE PROGRAMA
+0006    0000                ORG 0X00
+0007    0000    2801        GOTO    START
+0008    0001            
+0009    0001            ;CODIGO
+0010    0001            START
+0011    0001    1683        BSF STATUS,5
+0012    0002    0186        CLRF    TRISB      ;TODOS SON SALIDA
+0013    0003    1788        BSF TRISD, 7
+0014    0004    1283        BCF STATUS, RP0
+0015    0005    1283        BCF STATUS,5
+0016    0006    3000        MOVLW   0X00
+0017    0007    0086        MOVWF   PORTB
+0018    0008    2809        GOTO    MENU
+0019    0009            
+0020    0009            MENU
+0021    0009    1B88        BTFSC   PORTD, 7
+0022    000A    280D        GOTO    DERECHA
+0023    000B    2810        GOTO    IZQUIERDA
+0024    000C    2809        GOTO    MENU
+0025    000D            
+0026    000D            DERECHA
+0027    000D    2016        CALL    MV1
+0028    000E    201A        CALL    MV2
+0029    000F    2809        GOTO    MENU
+0030    0010            
+0031    0010            IZQUIERDA
+0032    0010    201E        CALL    MV3
+0033    0011    2022        CALL    MV4
+0034    0012    2809        GOTO    MENU
+0035    0013            
+0036    0013            MV
+0037    0013    0821        MOVF    DATO, W
+0038    0014    0086        MOVWF   PORTB
+0039    0015    0008        RETURN
+0040    0016            
+0041    0016            MV1
+0042    0016    3001        MOVLW   B'00000001'
+0043    0017    00A1        MOVWF   DATO
+0044    0018    2013        CALL    MV
+0045    0019    0008        RETURN
+0046    001A            
+0047    001A            MV2
+0048    001A    3002        MOVLW   B'00000010'
+0049    001B    00A1        MOVWF   DATO
+0050    001C    2013        CALL    MV
+0051    001D    0008        RETURN
+0052    001E            
+0053    001E            MV3
+0054    001E    3080        MOVLW   B'10000000'
+0055    001F    00A1        MOVWF   DATO
+0056    0020    2013        CALL    MV
+0057    0021    0008        RETURN
+0058    0022            
+0059    0022            MV4
+0060    0022    3040        MOVLW   B'01000000'
+0061    0023    00A1        MOVWF   DATO
+0062    0024    2013        CALL    MV
+0063    0025    0008        RETURN
+0064    0026            
+0065    0026            END
+---------------------------------------------
+Number of errors = 0

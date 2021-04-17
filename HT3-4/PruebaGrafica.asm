@@ -1183,3 +1183,62 @@ M=-1
 (looped)
 @looped
 0;JMP
+
+
+
+AVAZADA
+c++ clr
+
+ED1
+Arboles binarios
+Arboles mutlicamino (B, B*, B+ )
+Pilas, colas
+C# MVC FrontEnd
+MVC? 
+Model View Controller
+Web con C# 
+@codigo de c#
+
+ARCHIVOS
+Java
+JForms
+Logins y manejo de datos pero en archivos
+tippo de archivos
+
+ED2
+c# .net Core BackEnd 
+Servidiores
+API REST
+MongoDB
+
+Bases 1
+SQL basico
+Select, insert, delete, update, joins
+https://correo2urledu-my.sharepoint.com/:w:/g/personal/maroches_correo_url_edu_gt/EYacSrbY9XJNh_BGc1y6bt4BqLyZeOeibjKNunntAlCKug?e=jxojUM
+
+LENGUAJES FORMALES Y AUTOMATAS	
+Lenguaje Libre
+Automatas, tipos denguales
+analisis sintactico
+
+hola mundo <- este permitida si o NO
+
+Compiladores
+Lenguaje Libre
+Expresiones Regulares
+Fases de compilacion
+    Lexico
+        Tokens
+            int, string, boolneas
+    sintactico
+        orden de toknes
+    Semantico   
+        que tenga sentido
+
+    Lenguaje de 2 direcciones
+        java -> assembly
+        c# -> assembly
+        PHP -> assembly
+        Js -> assembly
+
+

@@ -1,3 +1,4 @@
+//--------------------------------------------------IMPRIMIR TABLERO INICIAL----------------------------------------------------
 @16394
 M = -1
 @16405
@@ -863,42 +864,257 @@ M = -1
 @20405
 M = -1
 
+@9
+M=-1
+@8
+M=-1
+@7
+M=-1
+@6
+M=-1
+@5
+M=-1
+@4
+M=-1
+@3
+M=-1
+@2
+M=-1
+@1
+M=-1
 
-@casilla1
-M = 1
-@casilla2
-M = 1
-@casilla3
-M = 1
-@casilla4
-M = 1
-@casilla5
-M = 1
-@casilla6
-M = 1
-@casilla7
-M = 1
-@casilla8
-M = 1
-@casilla9
-M = 1
+//------------------------------------------------------                INICIO DE JUEGO          ------------------------------
+
+// *********************************************************************************************************** TURNO JUGADOR
+//obtenemos la tecla
+(TurnoJugador)
+@24576
+D = M
+
+@Tecla
+M=D
+
+@Positiva
+//if
+D; JGT // D > 0  
+
+//Parte negativa NO SE INGRESO LA TECLA ESPERADA
+@TurnoJugador
+    D;JMP
+
+//Parte Positiva SE INGRESO UA TECLA
+(Positiva)
+// Buscamos que tecla se preciono
+@0
+M=D
+
+//*********************************************         1
+@49
+D=A+1
+@0
+D = D-M  
+//imprimimos
+@Horizontal_1
+D ; JGT
+
+//*********************************************         2
+@50
+D=A+1
+@0
+D = D-M  
+//imprimimos
+@Horizontal_2
+D ; JGT
+
+//*********************************************         3
+@51
+D=A+1
+@0
+D = D-M  
+//imprimimos
+@Horizontal_3
+D ; JGT
 
 
-//-------------------------------------------------- ZONA IINTERACTIVA ------------------------------
-(Turno1)
+//*********************************************         4
+@52
+D=A+1
+@0
+D = D-M  
+//imprimimos
+@Horizontal_4
+D ; JGT
 
-(Positivo)
-@Turno1
+
+//*********************************************         5
+@53
+D=A+1
+@0
+D = D-M  
+//imprimimos
+@Horizontal_5
+D ; JGT
+
+
+//*********************************************         6
+@54
+D=A+1
+@0
+D = D-M  
+//imprimimos
+@Horizontal_6
+D ; JGT
+
+//*********************************************         7
+@55
+D=A+1
+@0
+D = D-M  
+//imprimimos
+@Horizontal_7
+D ; JGT
+
+//*********************************************         8
+@56
+D=A+1
+@0
+D = D-M  
+//imprimimos
+@Horizontal_8
+D ; JGT
+
+//*********************************************         9
+@57
+D=A+1
+@0
+D = D-M  
+//imprimimos
+@Horizontal_9
+D ; JGT
+
+
+// *********************************************************************************************************** TURNO OPONENTE
+//obtenemos la tecla
+(TurnoOponente)
+@24576
+    D = M
+@Tecla
+M=D
+
+@PositivaOponente
+//if
+D; JGT   
+
+//Parte negativa NO SE INGRESO LA TECLA ESPERADA
+@TurnoOponente
+    D;JMP
+
+//Parte Positiva SE INGRESO UA TECLA
+(PositivaOponente)
+// Buscamos que tecla se preciono
+@0
+M=D
+
+//*********************************************         1
+@49
+D=A+1
+@0
+D = D-M  
+//imprimimos
+@Vertical_1
+D ; JGT
+
+//*********************************************         2
+@50
+D=A+1
+@0
+D = D-M  
+//imprimimos
+@Vertical_2
+D ; JGT
+
+//*********************************************         3
+@51
+D=A+1
+@0
+D = D-M  
+//imprimimos
+@Vertical_3
+D ; JGT
+
+
+//*********************************************         4
+@52
+D=A+1
+@0
+D = D-M  
+//imprimimos
+@Vertical_4
+D ; JGT
+
+
+//*********************************************         5
+@53
+D=A+1
+@0
+D = D-M  
+//imprimimos
+@Vertical_5
+D ; JGT
+
+
+//*********************************************         6
+@54
+D=A+1
+@0
+D = D-M  
+//imprimimos
+@Vertical_6
+D ; JGT
+
+//*********************************************         7
+@55
+D=A+1
+@0
+D = D-M  
+//imprimimos
+@Vertical_7
+D ; JGT
+
+//*********************************************         8
+@56
+D=A+1
+@0
+D = D-M  
+//imprimimos
+@Vertical_8
+D ; JGT
+
+//*********************************************         9
+@57
+D=A+1
+@0
+D = D-M  
+//imprimimos
+@Vertical_9
+D ; JGT
+
+
+
+
+(END)
+@END
 0;JMP
 
-
-(Turno2)
-@Turno2
-0;JMP
 
 //----------------------------------------------ZONA DE PINTADO ---------------------------------------
+// ********************************************** VERTICALES
 //-v7
 (Vertical_7)
+@7
+D=M
+@TurnoOponente
+D;JGT
 @16484
 M=-1
 @16485
@@ -1021,18 +1237,24 @@ M=-1
 M=-1
 @17444
 M=-1
-@17445
+@17445  
 M=-1
 @17476
 M=-1
 @17477
 M=-1
+@7
+M=1
 //SiguienteTurno
 @TurnoJugador
 0;JMP
 
 //-v8
 (Vertical_8)
+@8
+D=M
+@TurnoOponente
+D;JGT
 @16495
 M=-1
 @16496
@@ -1161,12 +1383,18 @@ M=-1
 M=-1
 @17488
 M=-1
+@8
+M=1
 //SiguienteTurno
 @TurnoJugador
 0;JMP
 
 //-v9
 (Vertical_9)
+@9
+D=M
+@TurnoOponente
+D;JGT
 @16506
 M=-1
 @16507
@@ -1295,12 +1523,18 @@ M=-1
 M=-1
 @17499
 M=-1
+@9
+M=1
 //SiguienteTurno
 @TurnoJugador
 0;JMP
 
 //-v4
 (Vertical_4)
+@4
+D=M
+@TurnoOponente
+D;JGT
 @17860
 M=-1
 @17861
@@ -1429,12 +1663,18 @@ M=-1
 M=-1
 @18853
 M=-1
+@4
+M=1
 //SiguienteTurno
 @TurnoJugador
 0;JMP
 
 //-v5
 (Vertical_5)
+@5
+D=M
+@TurnoOponente
+D;JGT
 @17871
 M=-1
 @17872
@@ -1563,12 +1803,18 @@ M=-1
 M=-1
 @18864
 M=-1
+@5
+M=1
 //SiguienteTurno
 @TurnoJugador
 0;JMP
 
 //-v6
 (Vertical_6)
+@6
+D=M
+@TurnoOponente
+D;JGT
 @17882
 M=-1
 @17883
@@ -1697,12 +1943,18 @@ M=-1
 M=-1
 @18875
 M=-1
+@6
+M=1
 //SiguienteTurno
 @TurnoJugador
 0;JMP
 
 //-v1
 (Vertical_1)
+@1
+D=M
+@TurnoOponente
+D;JGT
 @19268
 M=-1
 @19269
@@ -1831,12 +2083,18 @@ M=-1
 M=-1
 @20261
 M=-1
+@1
+M=1
 //SiguienteTurno
 @TurnoJugador
 0;JMP
 
 //-v2
 (Vertical_2)
+@2
+D=M
+@TurnoOponente
+D;JGT
 @19279
 M=-1
 @19280
@@ -1965,12 +2223,18 @@ M=-1
 M=-1
 @20272
 M=-1
+@2
+M=1
 //SiguienteTurno
 @TurnoJugador
 0;JMP
 
 //-v3
 (Vertical_3)
+@3
+D=M
+@TurnoOponente
+D;JGT
 @19290
 M=-1
 @19291
@@ -2102,9 +2366,17 @@ M=-1
 //SiguienteTurno
 @TurnoJugador
 0;JMP
+@3
+M=1
 
+// ********************************************** HORIZONTALES TURNO JUGADOR
 //-h7
 (Horizontal_7)
+@7
+//Validar Que el espacio Este vacio, si es 1, ya esta ocupado, Si >0, entonces regresa a la seleccion de espacio pero en el mismo turno
+D=M
+@TurnoJugador
+D;JGT
 @16962
 M=-1
 @16963
@@ -2129,13 +2401,19 @@ M=-1
 M=-1
 @16997
 M=-1
-
+@7
+M=1
 
 //SiguienteTurno
 @TurnoOponente
 0;JMP
 //-h8
 (Horizontal_8)
+@8
+//Validar Que el espacio Este vacio, si es 1, ya esta ocupado, Si >0, entonces regresa a la seleccion de espacio pero en el mismo turno
+D=M
+@TurnoJugador
+D;JGT
 @16973
 M=-1
 @16974
@@ -2160,13 +2438,19 @@ M=-1
 M=-1
 @17008
 M=-1
-
+@8
+M=1
 
 //SiguienteTurno
 @TurnoOponente
 0;JMP
 //-h9
 (Horizontal_9)
+@9
+//Validar Que el espacio Este vacio, si es 1, ya esta ocupado, Si >0, entonces regresa a la seleccion de espacio pero en el mismo turno
+D=M
+@TurnoJugador
+D;JGT
 @16984
 M=-1
 @16985
@@ -2191,13 +2475,19 @@ M=-1
 M=-1
 @17019
 M=-1
-
+@9
+M=1
 
 //SiguienteTurno
 @TurnoOponente
 0;JMP
 //-h4
 (Horizontal_4)
+@4
+//Validar Que el espacio Este vacio, si es 1, ya esta ocupado, Si >0, entonces regresa a la seleccion de espacio pero en el mismo turno
+D=M
+@TurnoJugador
+D;JGT
 @18370
 M=-1
 @18371
@@ -2222,13 +2512,19 @@ M=-1
 M=-1
 @18405
 M=-1
-
+@4
+M=1
 
 //SiguienteTurno
 @TurnoOponente
 0;JMP
 //-h5
 (Horizontal_5)
+@5
+//Validar Que el espacio Este vacio, si es 1, ya esta ocupado, Si >0, entonces regresa a la seleccion de espacio pero en el mismo turno
+D=M
+@TurnoJugador
+D;JGT
 @18381
 M=-1
 @18382
@@ -2253,13 +2549,19 @@ M=-1
 M=-1
 @18416
 M=-1
-
+@5
+M=1
 
 //SiguienteTurno
 @TurnoOponente
 0;JMP
 //-h6
 (Horizontal_6)
+@6
+//Validar Que el espacio Este vacio, si es 1, ya esta ocupado, Si >0, entonces regresa a la seleccion de espacio pero en el mismo turno
+D=M
+@TurnoJugador
+D;JGT
 @18392
 M=-1
 @18393
@@ -2284,13 +2586,19 @@ M=-1
 M=-1
 @18427
 M=-1
-
+@6
+M=1
 
 //SiguienteTurno
 @TurnoOponente
 0;JMP
 //-h1
-(Horizontal_1)
+(Horizontal_1) 
+@1
+//Validar Que el espacio Este vacio, si es 1, ya esta ocupado, Si >0, entonces regresa a la seleccion de espacio pero en el mismo turno
+D=M
+@TurnoJugador
+D;JGT
 @19874
 M=-1
 @19875
@@ -2315,13 +2623,19 @@ M=-1
 M=-1
 @19909
 M=-1
-
+@1
+M=1
 
 //SiguienteTurno
 @TurnoOponente
 0;JMP
 //-h2
 (Horizontal_2)
+@2
+//Validar Que el espacio Este vacio, si es 1, ya esta ocupado, Si >0, entonces regresa a la seleccion de espacio pero en el mismo turno
+D=M
+@TurnoJugador
+D;JGT
 @19885
 M=-1
 @19886
@@ -2346,13 +2660,19 @@ M=-1
 M=-1
 @19920
 M=-1
-
+@2
+M=1
 
 //SiguienteTurno
 @TurnoOponente
 0;JMP
 //-h3
 (Horizontal_3)
+@3
+//Validar Que el espacio Este vacio, si es 1, ya esta ocupado, Si >0, entonces regresa a la seleccion de espacio pero en el mismo turno
+D=M
+@TurnoJugador
+D;JGT
 @19896
 M=-1
 @19897
@@ -2377,12 +2697,8 @@ M=-1
 M=-1
 @19931
 M=-1
+@3
+M=1
 //SiguienteTurno
 @TurnoOponente
-0;JMP
-
-
-// ---------------------------------------------- FINAL ------------------------------------------------
-(LoopFinal)
-@LoopFinal
 0;JMP
