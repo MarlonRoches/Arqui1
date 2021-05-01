@@ -1,0 +1,378 @@
+---------------------------------------------
+PIC ASSEMBLER LISTING
+Line    Address Opcode  Instruction
+---------------------------------------------
+0001    0000            ;CONFIG
+0002    0000            	ESTADOROTACION EQU 0x20
+0003    0000                ;1 ->
+0004    0000                ;2 ↓
+0005    0000                ;3 <-
+0006    0000                ;4 arriba
+0007    0000                PosX EQU 0x21
+0008    0000                PosY EQU 0x22
+0009    0000                PiezaGenerada EQU 0x23
+0010    0000            
+0011    0000                ;↓
+0012    0000                Col1 EQU 0X31 ;logica Positiva
+0013    0000                Col2 EQU 0X32 ;logica Positiva
+0014    0000                Col3 EQU 0X33 ;logica Positiva
+0015    0000                Col4 EQU 0X34 ;logica Positiva
+0016    0000                Col5 EQU 0X35 ;logica Positiva
+0017    0000                Col6 EQU 0X36 ;logica Positiva
+0018    0000            
+0019    0000            
+0020    0000                AUX1 EQU 0X3A
+0021    0000                AUX2 EQU 0X3b
+0022    0000                TIMER EQU 0x3C
+0023    0000            
+0024    0000            
+0025    0000            	FILAS EQU  PORTC   ; logica normal
+0026    0000            	COLUMNAS EQU PORTB ; Para invertida
+0027    0000            
+0028    0000                                  ;  INICIO DE PROGRAMA
+0029    0000            	ORG 0
+0030    0000    2801    	GOTO START
+0031    0001            
+0032    0001                                  ;  CODIGO
+0033    0001            START
+0034    0001                                  ;  Nos Movemos a banco 1 -> status 01
+0035    0001    1683        BSF STATUS,5
+0036    0002    0185        CLRF TRISA            ;  A TODOS SON SALIDA
+0037    0003    0187        CLRF TRISC            ;  C SALIDA DE FILAS
+0038    0004    0186        CLRF TRISB            ;  B SALIDA DE COLUMNAS
+0039    0005    0188        CLRF TRISD            ;  D CLEAR
+0040    0006    0189        CLRF TRISE            ;  E CLEAR
+0041    0007            
+0042    0007            
+0043    0007    1408        BSF TRISD,0           ;  MOVER IZQUIERDA
+0044    0008    1488        BSF TRISD,1           ;  MOVER DERECHA
+0045    0009    1508        BSF TRISD,2           ;  BAJAR
+0046    000A    1588        BSF TRISD,3           ;  ROTAR
+0047    000B            
+0048    000B    1283        BCF STATUS,5        ;  limpiamos rp0, moviendonos al banco 0
+0049    000C                                    ;  seteamos todos los leds a 0 en el inicio
+0050    000C    303F        MOVLW b'00111111'
+0051    000D    0086        MOVWF PORTB         ;
+0052    000E            
+0053    000E    3000        MOVLW 0
+0054    000F    0087        MOVWF PORTC
+0055    0010    0088        MOVWF PORTD
+0056    0011    3000        MOVLW 0
+0057    0012    00BA        MOVWF AUX1
+0058    0013    00BB        MOVWF AUX2
+0059    0014            
+0060    0014    30FF        MOVLW b'11111111'
+0061    0015    00B1        movwf Col1
+0062    0016    00B2    	movwf Col2
+0063    0017    00B3    	movwf Col3
+0064    0018    00B4    	movwf Col4
+0065    0019    00B5    	movwf Col5
+0066    001A    00B6    	movwf Col6
+0067    001B            
+0068    001B    3001            MOVLW 1
+0069    001C    00A1        	movwf PosX
+0070    001D    3001        	MOVLW 1
+0071    001E    00A2        	movwf PosY
+0072    001F            
+0073    001F    2820        GOTO Main
+0074    0020            
+0075    0020            Main
+0076    0020            
+0077    0020            
+0078    0020            
+0079    0020            
+0080    0020    1C23        BTFSS PiezaGenerada ,0  ; hay una pieza generada? ==1?
+0081    0021    2887        goto  PrimerBloque        ; no, creala
+0082    0022                                    ; si, sigue
+0083    0022                ;Mostrar
+0084    0022            
+0085    0022                ;Opciones De Entrada
+0086    0022                    ;Mover Izquierda
+0087    0022    1808            BTFSc PORTD,0         ;BTN ← Activado
+0088    0023    202D                call MOVERIZQUIERDA
+0089    0024                        ;Mover Derecha
+0090    0024    1888            BTFSc PORTD,1         ;BTN → Activado
+0091    0025    202E                call MOVERDERECHA
+0092    0026            
+0093    0026                        ;Mover ABAJO
+0094    0026    1908            BTFSc PORTD,2         ;BTN ↓ Activado
+0095    0027    202F                call MOVERABAJO
+0096    0028            
+0097    0028                        ;Rotar
+0098    0028    1988            BTFSc PORTD,3         ;BTN ↑ Activado
+0099    0029    2030                call ROTAR
+0100    002A    206C     	call print
+0101    002B            
+0102    002B                	;call BIGDELAY
+0103    002B            	;call BIGDELAY
+0104    002B            	;call BIGDELAY
+0105    002B            	;call BIGDELAY
+0106    002B    2031    	call Caida
+0107    002C    2820        goto Main
+0108    002D            
+0109    002D            MOVERIZQUIERDA
+0110    002D                ;
+0111    002D    0008        return
+0112    002E            
+0113    002E            MOVERDERECHA
+0114    002E                	;posx1
+0115    002E            
+0116    002E            	;posx2
+0117    002E            	;posx3
+0118    002E            	;posx4
+0119    002E            	;posx5
+0120    002E            	;posx6
+0121    002E    0008        return
+0122    002F            
+0123    002F            MOVERABAJO
+0124    002F                ;
+0125    002F    0008        return
+0126    0030            
+0127    0030            ROTAR
+0128    0030                ;
+0129    0030    0008        return
+0130    0031            CAIDA
+0131    0031            	;y0
+0132    0031    0822    	movf posy, w
+0133    0032    3A06    	xorlw 6
+0134    0033    1903    	BTFSc status,z
+0135    0034    2887    		goto PrimerBloque
+0136    0035            
+0137    0035            
+0138    0035            	;y0
+0139    0035    0822    	movf posy, w
+0140    0036    3A05    	xorlw 5
+0141    0037    1903    	BTFSc status,z
+0142    0038    2820    		goto main
+0143    0039            	;y0
+0144    0039    0822    	movf posy, w
+0145    003A    3A04    	xorlw 4
+0146    003B    1903    	BTFSc status,z
+0147    003C    2820    		goto main
+0148    003D            
+0149    003D            		;y3
+0150    003D    0822    		movf posy, w
+0151    003E    3A03    	xorlw 3
+0152    003F    1903    	BTFSc status,z
+0153    0040    2820    		goto main
+0154    0041            
+0155    0041            	;y0
+0156    0041    0822    	movf posy, w
+0157    0042    3A02    	xorlw 2
+0158    0043    1903    	BTFSc status,z
+0159    0044    2820    		goto main
+0160    0045            	;y0
+0161    0045    0822    	movf posy, w
+0162    0046            
+0163    0046    3A01    	xorlw 1
+0164    0047    1903    	BTFSc status,z
+0165    0048    284A    		goto OR12
+0166    0049    0008        return
+0167    004A            
+0168    004A            OR12
+0169    004A    0831    	movf Col1,W
+0170    004B    1C31    	BTFSS Col1,0
+0171    004C    10B1    	bcf col1,1
+0172    004D    1431    	bsf col1,0
+0173    004E    0831    	movf col1,w
+0174    004F            
+0175    004F    0832    	movf Col2,W
+0176    0050    1C32    	BTFSS Col2,0
+0177    0051    10B2    	bcf Col2,1
+0178    0052    1432    	bsf Col2,0
+0179    0053    0832    	movf col2,w
+0180    0054            
+0181    0054            
+0182    0054            
+0183    0054    0833    	movf Col3,W
+0184    0055    1C33    	BTFSS Col3,0
+0185    0056    10B3    	bcf Col3,1
+0186    0057    1433    	bsf Col3,0
+0187    0058    0833    		movf col3,w
+0188    0059            
+0189    0059            
+0190    0059    0834    	movf Col4,W
+0191    005A    1C34    	BTFSS Col4,0
+0192    005B    10B4    	bcf Col4,1
+0193    005C    1434    	bsf Col4,0
+0194    005D    0834    		movf col4,w
+0195    005E            
+0196    005E            
+0197    005E            
+0198    005E    0835    	movf Col5,W
+0199    005F    1C35    	BTFSS Col5,0
+0200    0060    10B5    	bcf Col5,1
+0201    0061    1435    	bsf Col5,0
+0202    0062    0835    	movf col5,w
+0203    0063            
+0204    0063            
+0205    0063            
+0206    0063    0836    	movf Col6,W
+0207    0064    1C36    	BTFSS Col6,0
+0208    0065    10B6    	bcf Col6,1
+0209    0066    1436    	bsf Col6,0
+0210    0067    0836    	movf col6,w
+0211    0068            
+0212    0068            		;1 no hubo cambio
+0213    0068    3002    	movlw 2
+0214    0069    00A2    	movwf posy
+0215    006A    0008    	return
+0216    006B            
+0217    006B            OR23
+0218    006B            
+0219    006B    0008    	return
+0220    006C            
+0221    006C            PRINT
+0222    006C            
+0223    006C    0831        movf Col1, W ; <-11111110
+0224    006D    0087        movwf PortC
+0225    006E    3001        movlw b'00000001'
+0226    006F    0086        movwf PortB
+0227    0070            
+0228    0070    0832        movf Col2, W ; <-11111110
+0229    0071    0087        movwf PortC
+0230    0072    3002        movlw b'00000010'
+0231    0073    0086        movwf PortB
+0232    0074            
+0233    0074    0833        movf Col3, W ; <-11111110
+0234    0075    0087        movwf PortC
+0235    0076    3004        movlw b'00000100'
+0236    0077    0086        movwf PortB
+0237    0078            
+0238    0078    0834        movf Col4, W ; <-11111110
+0239    0079    0087        movwf PortC
+0240    007A    3008        movlw b'00001000'
+0241    007B    0086        movwf PortB
+0242    007C            
+0243    007C    0835        movf Col5, W ; <-11111110
+0244    007D    0087        movwf PortC
+0245    007E    3010        movlw b'00010000'
+0246    007F    0086        movwf PortB
+0247    0080            
+0248    0080            
+0249    0080    0836        movf Col6, W ; <-11111110
+0250    0081    0087        movwf PortC
+0251    0082    3020        movlw b'00100000'
+0252    0083    0086        movwf PortB
+0253    0084    3000      movlw b'00000000'
+0254    0085    0086        movwf PortB
+0255    0086            
+0256    0086            	;call delay
+0257    0086            
+0258    0086    0008        return
+0259    0087            
+0260    0087            PrimerBloque
+0261    0087    30FE        movlw b'11111110'
+0262    0088    00B1        movwf Col1
+0263    0089    00B2        movwf Col2
+0264    008A    3001        movlw b'00000001'
+0265    008B            
+0266    008B    00A3        movwf PiezaGenerada
+0267    008C            
+0268    008C    2820        GOTO Main
+0269    008D            
+0270    008D            BIGDELAY
+0271    008D    20DE        call DELAY
+0272    008E    20DE        call DELAY
+0273    008F    20DE        call DELAY
+0274    0090    20DE        call DELAY
+0275    0091    20DE        call DELAY
+0276    0092    20DE        call DELAY
+0277    0093    20DE        call DELAY
+0278    0094    20DE        call DELAY
+0279    0095    20DE        call DELAY
+0280    0096    20DE        call DELAY
+0281    0097    20DE     call DELAY
+0282    0098    20DE        call DELAY
+0283    0099    20DE        call DELAY
+0284    009A    20DE        call DELAY
+0285    009B    20DE        call DELAY
+0286    009C    20DE        call DELAY
+0287    009D    20DE        call DELAY
+0288    009E    20DE        call DELAY
+0289    009F    20DE        call DELAY
+0290    00A0    20DE        call DELAY
+0291    00A1    20DE     call DELAY
+0292    00A2    20DE        call DELAY
+0293    00A3    20DE        call DELAY
+0294    00A4    20DE        call DELAY
+0295    00A5    20DE        call DELAY
+0296    00A6    20DE        call DELAY
+0297    00A7    20DE        call DELAY
+0298    00A8    20DE        call DELAY
+0299    00A9    20DE        call DELAY
+0300    00AA    20DE        call DELAY
+0301    00AB    20DE     call DELAY
+0302    00AC    20DE        call DELAY
+0303    00AD    20DE        call DELAY
+0304    00AE    20DE        call DELAY
+0305    00AF    20DE        call DELAY
+0306    00B0    20DE        call DELAY
+0307    00B1    20DE        call DELAY
+0308    00B2    20DE        call DELAY
+0309    00B3    20DE        call DELAY
+0310    00B4    20DE        call DELAY
+0311    00B5    20DE     call DELAY
+0312    00B6    20DE        call DELAY
+0313    00B7    20DE        call DELAY
+0314    00B8    20DE        call DELAY
+0315    00B9    20DE        call DELAY
+0316    00BA    20DE        call DELAY
+0317    00BB    20DE        call DELAY
+0318    00BC    20DE        call DELAY
+0319    00BD    20DE        call DELAY
+0320    00BE    20DE        call DELAY
+0321    00BF    20DE     call DELAY
+0322    00C0    20DE        call DELAY
+0323    00C1    20DE        call DELAY
+0324    00C2    20DE        call DELAY
+0325    00C3    20DE        call DELAY
+0326    00C4    20DE        call DELAY
+0327    00C5    20DE        call DELAY
+0328    00C6    20DE        call DELAY
+0329    00C7    20DE        call DELAY
+0330    00C8    20DE        call DELAY
+0331    00C9    20DE     	call DELAY
+0332    00CA    20DE        call DELAY
+0333    00CB    20DE        call DELAY
+0334    00CC    20DE        call DELAY
+0335    00CD    20DE        call DELAY
+0336    00CE    20DE        call DELAY
+0337    00CF    20DE        call DELAY
+0338    00D0    20DE        call DELAY
+0339    00D1    20DE        call DELAY
+0340    00D2    20DE        call DELAY
+0341    00D3    20DE     	call DELAY
+0342    00D4    20DE        call DELAY
+0343    00D5    20DE        call DELAY
+0344    00D6    20DE        call DELAY
+0345    00D7    20DE        call DELAY
+0346    00D8    20DE        call DELAY
+0347    00D9    20DE        call DELAY
+0348    00DA    20DE        call DELAY
+0349    00DB    20DE        call DELAY
+0350    00DC    20DE        call DELAY
+0351    00DD            
+0352    00DD    0008        return
+0353    00DE            
+0354    00DE            
+0355    00DE            
+0356    00DE            DELAY
+0357    00DE    30FF        movlw b'11111111'
+0358    00DF    00BC        movwf TIMER
+0359    00E0    20E5        call DELAY2
+0360    00E1    30FF        movlw b'11111111'
+0361    00E2    00BC        movwf TIMER
+0362    00E3    20E5        call DELAY2
+0363    00E4    0008        return
+0364    00E5            
+0365    00E5            DELAY2
+0366    00E5    206C        call PRINT
+0367    00E6    0BBC        decfsz TIMER, 1
+0368    00E7    28E5        goto DELAY2
+0369    00E8    0008        return
+0370    00E9            
+0371    00E9            
+0372    00E9            END
+---------------------------------------------
+Number of errors = 0

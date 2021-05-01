@@ -2,274 +2,272 @@
 PIC ASSEMBLER LISTING
 Line    Address Opcode  Instruction
 ---------------------------------------------
-0001    0000            	                      ;  CONFIGURACI�N
+0001    0000            	                      ;  CONFIGURACI?N
 0002    0000            	DATO EQU 0x20
 0003    0000            	aux EQU 0x30
-0004    0000            	OPERACION EQU 0x20
-0005    0000            	NUMERO1 EQU 0x21
-0006    0000            	NUMERO2 EQU 0x22
-0007    0000            	ESTADO EQU 0x03
-0008    0000            	RESULTADO EQU 0x31
-0009    0000            	DelayNum EQU 0x35
-0010    0000            	                      ;  INICIO DE PROGRAMA
-0011    0000            	ORG 0X00
-0012    0000    2801    	GOTO START
-0013    0001            
-0014    0001            	                      ;  CODIGO
-0015    0001            START
-0016    0001            	                      ;  Nos Movemos a banco 1 -> status 01
-0017    0001    1683    	BSF STATUS,5
-0018    0002    0187    	CLRF TRISC
-0019    0003    1407    	BSF TRISC,0           ;  ENTRADA SAVE
-0020    0004    1487    	BSF TRISC,1           ;  ENTRAdA para Agregar Numero
-0021    0005    0185    	CLRF TRISA            ;  B TODOS SON SALIDA
-0022    0006    0186    	CLRF TRISB           ;  C TODOS SON SALIDA
-0023    0007    0188    	CLRF TRISD            ;  D TODOS SON SALIDA
-0024    0008            	                      ;  limpiamos rp0, moviendonos al banco 0
-0025    0008    1283    	BCF STATUS,5
-0026    0009            	                      ;  seteamos todos los leds a 0 en el inicio
-0027    0009    3000    	MOVLW 0
-0028    000A    0086    	MOVWF PORTB
-0029    000B    0087    	MOVWF PORTC
-0030    000C    0088    	MOVWF PORTD
-0031    000D            
-0032    000D    280E    	GOTO MENU
-0033    000E            
-0034    000E            MENU
-0035    000E            		;Pedimos el primer numero
-0036    000E    2815    	goto  PrimerNumero
-0037    000F            		;Ingresamos el segundo numero
-0038    000F    2829    	goto SegundoNumero
-0039    0010    2856    	goto RealizarOperacion
-0040    0011            	                      ;  delay
-0041    0011            	                      ;  ingresamos el
-0042    0011    2842    	goto SeleccionarOperacion
-0043    0012            
-0044    0012    2856    	goto RealizarOperacion
-0045    0013            	                      ;  BTFSS ;si el port A en A0 es =1, salta una instruccion
-0046    0013    1C05    	BTFSS PORTA,0
-0047    0014            	                      ;  BTFSC ;si el port A en A0 es =0, salta una instruccion
-0048    0014            
-0049    0014    280E    	GOTO MENU
-0050    0015            
-0051    0015            PrimerNumero
-0052    0015            ;ch e c k
-0053    0015            	;BsF PORTA,0           ;  se simula la entrada de un numero para sumar
-0054    0015            
-0055    0015    1807    	BTFSc PORTC,0         ;  PORTA[0] == 1
-0056    0016    2024    	call GuardarNum1
-0057    0017            	                ;  SAVE TRUE
-0058    0017            	                      ;  SAVE FALSE
-0059    0017    1C87    	BTFSs PORTC,1         ;  PORTA[1] == 1
-0060    0018    2815    	GOTO PrimerNumero     ;  FALSE, no se le suma recursivo
-0061    0019            	                      ;  TRUE sumar
-0062    0019    3001    	MOVLW 0x1
-0063    001A    0786    	ADDWF PORTB,1
-0064    001B    0806    	movf PORTB,W
-0065    001C            
-0066    001C            	;xorlw b'00010000'; pregunto si estan en 1111
-0067    001C    1A06    	BTFSc PORTB,4
-0068    001D    2821    	GOTO RestaurarNumero1
-0069    001E            
-0070    001E    2076    	call Delay
-0071    001F    2080    	call Delaynt
-0072    0020    2815    	GOTO PrimerNumero     ;  TRUE recursivo
-0073    0021            
-0074    0021            RestaurarNumero1
-0075    0021    3000    	MOVLW b'00000000'
-0076    0022    0086    	movwf PORTB
-0077    0023    2815    	GOTO PrimerNumero
-0078    0024            
-0079    0024            GuardarNum1
-0080    0024            
-0081    0024    0806    	movf PORTB,W
-0082    0025    00A1    	movwf NUMERO1
-0083    0026    2076    	call Delay
-0084    0027    2080    	call Delaynt
-0085    0028    2829    	goto SegundoNumero
-0086    0029            
-0087    0029            
-0088    0029            po
-0089    0029            ;--------------------------------------------------------------------
-0090    0029            
-0091    0029            SegundoNumero
-0092    0029            ;ch e c k
-0093    0029            	;BsF PORTA,0           ;  se simula la entrada de un numero para sumar
-0094    0029            
-0095    0029    1807    	BTFSc PORTC,0         ;  PORTA[0] == 1
-0096    002A    2836    	goto GuardarNum2
-0097    002B            	                ;  SAVE TRUE
-0098    002B            	                      ;  SAVE FALSE
-0099    002B    1C87    	BTFSs PORTC,1         ;  PORTA[1] == 1
-0100    002C    2829    	GOTO SegundoNumero     ;  FALSE, no se le suma recursivo
-0101    002D            	                      ;  TRUE sumar
-0102    002D    3010    	MOVLW 16
-0103    002E    0786    	ADDWF PORTB,1
-0104    002F    0806    	movf PORTB,W
-0105    0030            
-0106    0030            	;xorlw b'00010000'; pregunto si estan en 1111
-0107    0030            	;BTFSc PORTB,4
-0108    0030            	;GOTO RestaurarNumero2
-0109    0030    2076    	call Delay
-0110    0031            
-0111    0031    2829    	GOTO SegundoNumero     ;  TRUE recursivo
-0112    0032            
-0113    0032            RestaurarNumero2
-0114    0032    3021    	MOVLW NUMERO1 ;traemos el numero 1 intacto
-0115    0033    0086    	movwf PORTB
-0116    0034    2076    	call Delay
-0117    0035    2829    	GOTO SegundoNumero
-0118    0036            
-0119    0036            GuardarNum2
-0120    0036            ;puerto b - numero 1
-0121    0036            	;movf NUMERO1,W
-0122    0036    1A06    	BTFSC PORTB ,4
-0123    0037    1422    	BSF NUMERO2,0
-0124    0038    1A86    	BTFSC PORTB ,5
-0125    0039    14A2    	BSF NUMERO2,1
-0126    003A    1B06    	BTFSC PORTB ,6
-0127    003B    1522    	BSF NUMERO2,2
-0128    003C    1B86    	BTFSC PORTB ,7
-0129    003D    15A2    	BSF NUMERO2,3
-0130    003E    2076    	call Delay
-0131    003F    2080    	call Delaynt
-0132    0040    1408    	BSF PORTD, 0
-0133    0041    2842    	goto SeleccionarOperacion
-0134    0042            
-0135    0042            ;--------------------------------------------------------------------------------
-0136    0042            
-0137    0042            ;*********************************************************************************
-0138    0042            
-0139    0042            SeleccionarOperacion
-0140    0042            ;ch e c k
-0141    0042            	;PArte 1
-0142    0042            
-0143    0042    1807    	BTFSc PORTC,0         ;  PORTA[0] == 1
-0144    0043    2853    	goto GuardarOperacion
-0145    0044            	                ;  SAVE TRUE
-0146    0044            	                      ;  SAVE FALSE
-0147    0044    1C87    	BTFSs PORTC,1         ;  PORTA[1] == 1
-0148    0045    2842    	GOTO SeleccionarOperacion     ;  FALSE, no se le suma recursivo
-0149    0046            	                      ;  TRUE sumar
-0150    0046    3001    	MOVLW 1
-0151    0047    0088    	movwf PORTD
-0152    0048    2076    		call Delay
-0153    0049    2080    	call Delaynt
-0154    004A            
-0155    004A            	;xorlw b'00000011'; pregunto si estan en 1111
-0156    004A            SegundaParte
-0157    004A    1807    	BTFSc PORTC,0         ;  PORTA[0] == 1
-0158    004B    2853    	goto GuardarOperacion
-0159    004C            	                ;  SAVE TRUE
-0160    004C            	                      ;  SAVE FALSE
-0161    004C    1C87    	BTFSs PORTC,1         ;  PORTA[1] == 1
-0162    004D    284A    	GOTO SegundaParte     ;  FALSE, no se le suma recursivo
-0163    004E            	                      ;  TRUE sumar
-0164    004E    3002    	MOVLW 2
-0165    004F    0088    	movwf PORTD
-0166    0050            
-0167    0050    2076    	call Delay
-0168    0051    2080    	call Delaynt
-0169    0052    2842    	GOTO SeleccionarOperacion     ;  TRUE recursivo
-0170    0053            
-0171    0053            GuardarOperacion
-0172    0053            
-0173    0053    0808    	movf PORTD,W
-0174    0054    00A0    	movwf OPERACION
-0175    0055    2856    	goto RealizarOperacion
-0176    0056            
-0177    0056            ;**********************************************************************************
-0178    0056            
-0179    0056            RealizarOperacion
-0180    0056            
-0181    0056            
-0182    0056    1C08    	BTFSS PORTD,0 ; ir a suma
-0183    0057    2868    	goto Restar ; resta
-0184    0058    285A    	goto Sumar
-0185    0059            
-0186    0059    0008    	return
-0187    005A            Sumar
-0188    005A            
-0189    005A    0821    	movf NUMERO1,W
-0190    005B    0722    	ADDWF NUMERO2,0 ; w = portB - numero 1
-0191    005C    00B1    	movwf RESULTADO
-0192    005D            
-0193    005D            	;PORTC[4]=RESULTADO[0]
-0194    005D            
-0195    005D            
-0196    005D    1831    	BTFSc RESULTADO ,0
-0197    005E    1607    	bsf PORTC,4
-0198    005F            	;PORTC[5]=RESULTADO[1]
-0199    005F            
-0200    005F    18B1    	BTFSc RESULTADO ,1
-0201    0060    1687    	bsf PORTC,5
-0202    0061            
-0203    0061            ;PORTC[6]=RESULTADO[2]
-0204    0061            
-0205    0061    1931    	BTFSc RESULTADO ,2
-0206    0062    1707    	bsf PORTC,6
-0207    0063            ;PORTC[7]=RESULTADO[3]
-0208    0063    19B1    	BTFSc RESULTADO ,3
-0209    0064    1787    	bsf PORTC,7
-0210    0065    2076    	call Delay
-0211    0066    2080    	call Delaynt
-0212    0067    2883    	goto LoopFinal
-0213    0068            Restar
-0214    0068    0822    	movf NUMERO2,W
-0215    0069    0221    	SUBWF NUMERO1,0 ; w = portB - numero 1
-0216    006A    00B1    	movwf RESULTADO
-0217    006B            
-0218    006B            	;PORTC[4]=RESULTADO[0]
-0219    006B            
-0220    006B            
-0221    006B    1831    	BTFSc RESULTADO ,0
-0222    006C    1607    	bsf PORTC,4
-0223    006D            	;PORTC[5]=RESULTADO[1]
-0224    006D            
-0225    006D    18B1    	BTFSc RESULTADO ,1
-0226    006E    1687    	bsf PORTC,5
-0227    006F            
-0228    006F            ;PORTC[6]=RESULTADO[2]
-0229    006F            
-0230    006F    1931    	BTFSc RESULTADO ,2
-0231    0070    1707    	bsf PORTC,6
-0232    0071            ;PORTC[7]=RESULTADO[3]
-0233    0071    19B1    	BTFSc RESULTADO ,3
-0234    0072    1787    	bsf PORTC,7
-0235    0073    2076    	call Delay
-0236    0074    2080    	call Delaynt
-0237    0075    2883    	goto LoopFinal
-0238    0076            
-0239    0076            
-0240    0076            Delay
-0241    0076            
-0242    0076    3001    	MOVLW 1
-0243    0077    07B5    	ADDWF DelayNum,1
-0244    0078    0835    	movf DelayNum,W
-0245    0079            
-0246    0079            
-0247    0079    3001    	MOVLW 1
-0248    007A    0735    	addwf DelayNum,0
-0249    007B    0835    	movf DelayNum, W
-0250    007C    3AFF    	xorlw b'11111111'
-0251    007D    1802    	BTFSc z,0
-0252    007E    0008    	return
-0253    007F    2876    	goto Delay
-0254    0080            
-0255    0080            Delaynt
-0256    0080            
-0257    0080    3000    	MOVLW 0
-0258    0081    00B5    	movwf DelayNum
-0259    0082    0008    	return
-0260    0083            
-0261    0083            LoopFinal
-0262    0083            
-0263    0083    1C87    	BTFSs PORTC,1         ;  PORTA[1] == 1
-0264    0084    2883    	GOTO LoopFinal     ;  FALSE, no se le suma recursivo
-0265    0085            
-0266    0085    2801    	goto START
-0267    0086            END
-0268    0086            
-0269    0086            ;pagina 64 pdf modulo 3
+0004    0000            	OPERACION EQU 0x29
+0005    0000            		; var Numero1 =0; asignando espacio de memoria
+0006    0000            	NUMERO1 EQU 0x21
+0007    0000            	NUMERO2 EQU 0x22
+0008    0000            	ESTADO EQU 0x03
+0009    0000            	RESULTADO EQU 0x31
+0010    0000            	DelayNum EQU 0x35
+0011    0000            	                      ;  INICIO DE PROGRAMA
+0012    0000            	ORG 0X00
+0013    0000    2801    	GOTO START
+0014    0001            
+0015    0001            	                      ;  CODIGO
+0016    0001            START
+0017    0001            	                      ;  Nos Movemos a banco 1 -> status 01
+0018    0001    1683    	BSF STATUS,5
+0019    0002    0187    	CLRF TRISC
+0020    0003            		;seteale un  TRISx [0] = 1
+0021    0003    1407    	BSF TRISC,0           ;  ENTRADA SAVE
+0022    0004    1487    	BSF TRISC,1           ;  ENTRAdA para Agregar Numero
+0023    0005    0185    	CLRF TRISA
+0024    0006    1405    	BSF TRISA,0             ;  B TODOS SON SALIDA
+0025    0007    0186    	CLRF TRISB           ;  C TODOS SON SALIDA
+0026    0008    0188    	CLRF TRISD            ;  D TODOS SON SALIDA
+0027    0009            	                      ;  limpiamos rp0, moviendonos al banco 0
+0028    0009    1283    	BCF STATUS,5
+0029    000A            	                      ;  seteamos todos los leds a 0 en el inicio
+0030    000A    3000    	MOVLW 0
+0031    000B    0086    	MOVWF PORTB
+0032    000C    0087    	MOVWF PORTC
+0033    000D    0088    	MOVWF PORTD
+0034    000E            
+0035    000E    280F    	GOTO MENU
+0036    000F            
+0037    000F            MENU
+0038    000F            
+0039    000F            		;Pedimos el primer numero
+0040    000F    2816    	goto  PrimerNumero
+0041    0010            		;Ingresamos el segundo numero
+0042    0010    2828    	goto SegundoNumero
+0043    0011    2852    	goto RealizarOperacion
+0044    0012            	                      ;  delay
+0045    0012            	                      ;  ingresamos el
+0046    0012    2840    	goto SeleccionarOperacion
+0047    0013            
+0048    0013    2852    	goto RealizarOperacion
+0049    0014            	                      ;  BTFSS ;si el port A en A0 es =1, salta una instruccion
+0050    0014    1C05    	BTFSS PORTA,0
+0051    0015            	                      ;  BTFSC ;si el port A en A0 es =0, salta una instruccion
+0052    0015            
+0053    0015    280F    	GOTO MENU
+0054    0016            
+0055    0016            PrimerNumero
+0056    0016            ;ch e c k
+0057    0016            	;BsF PORTA,0           ;  se simula la entrada de un numero para sumar
+0058    0016            
+0059    0016            	; BTFSC if PORTC[0] == 0 osea que no hay pulsacion
+0060    0016            	; BTFSS if PORTC[0] == 1 osea que si hay pulsacion
+0061    0016    1807    	BTFSc PORTC,0         ;  PORTA[0] == 0
+0062    0017    2824    	goto  GuardarNum1
+0063    0018            	                	;  SAVE TRUE
+0064    0018            	                      ;  SAVE FALSE
+0065    0018    1C87    	BTFSs PORTC,1         ;  PORTA[1] == 1
+0066    0019    2816    	GOTO PrimerNumero     ;  FALSE, no se le suma recursivo
+0067    001A            	                      ;  TRUE sumar
+0068    001A    3001    	MOVLW 0x1
+0069    001B    0786    	ADDWF PORTB,1
+0070    001C    0806    	movf PORTB,W
+0071    001D            
+0072    001D            	;xorlw b'00010000'; pregunto si estan en 1111
+0073    001D    1A06    	BTFSc PORTB,4
+0074    001E    2821    	GOTO RestaurarNumero1
+0075    001F            
+0076    001F    2070    	call DELAYMACHINE
+0077    0020            
+0078    0020    2816    	GOTO PrimerNumero     ;  TRUE recursivo
+0079    0021            
+0080    0021            RestaurarNumero1
+0081    0021    3000    	MOVLW b'00000000'
+0082    0022    0086    	movwf PORTB
+0083    0023    2816    	GOTO PrimerNumero
+0084    0024            
+0085    0024            GuardarNum1
+0086    0024            
+0087    0024    0806    	movf PORTB,W
+0088    0025    00A1    	movwf NUMERO1
+0089    0026    2070    	call DELAYMACHINE
+0090    0027            
+0091    0027    2828    	goto SegundoNumero
+0092    0028            
+0093    0028            
+0094    0028            po
+0095    0028            ;--------------------------------------------------------------------
+0096    0028            
+0097    0028            SegundoNumero
+0098    0028            ;ch e c k
+0099    0028            	;BsF PORTA,0           ;  se simula la entrada de un numero para sumar
+0100    0028            
+0101    0028    1807    	BTFSc PORTC,0         ;  PORTA[0] == 1
+0102    0029    2835    	goto GuardarNum2
+0103    002A            	                ;  SAVE TRUE
+0104    002A            	                      ;  SAVE FALSE
+0105    002A    1C87    	BTFSs PORTC,1         ;  PORTA[1] == 1
+0106    002B    2828    	GOTO SegundoNumero     ;  FALSE, no se le suma recursivo
+0107    002C            	                      ;  TRUE sumar
+0108    002C    3010    	MOVLW 16
+0109    002D    0786    	ADDWF PORTB,1
+0110    002E    0806    	movf PORTB,W
+0111    002F            
+0112    002F            	;xorlw b'00010000'; pregunto si estan en 1111
+0113    002F            	;BTFSc PORTB,4
+0114    002F            	;GOTO RestaurarNumero2
+0115    002F    2070    	call DELAYMACHINE
+0116    0030            
+0117    0030    2828    	GOTO SegundoNumero     ;  TRUE recursivo
+0118    0031            
+0119    0031            RestaurarNumero2
+0120    0031    3021    	MOVLW NUMERO1 ;traemos el numero 1 intacto
+0121    0032    0086    	movwf PORTB
+0122    0033    2070    	call DELAYMACHINE
+0123    0034    2828    	GOTO SegundoNumero
+0124    0035            
+0125    0035            GuardarNum2
+0126    0035            ;puerto b - numero 1
+0127    0035            	;movf NUMERO1,W
+0128    0035    1A06    	BTFSC PORTB ,4
+0129    0036    1422    	BSF NUMERO2,0
+0130    0037    1A86    	BTFSC PORTB ,5
+0131    0038    14A2    	BSF NUMERO2,1
+0132    0039    1B06    	BTFSC PORTB ,6
+0133    003A    1522    	BSF NUMERO2,2
+0134    003B    1B86    	BTFSC PORTB ,7
+0135    003C    15A2    	BSF NUMERO2,3
+0136    003D    2070    	call DELAYMACHINE
+0137    003E            
+0138    003E    1408    	BSF PORTD, 0
+0139    003F    2840    	goto SeleccionarOperacion
+0140    0040            
+0141    0040            ;--------------------------------------------------------------------------------
+0142    0040            
+0143    0040            ;*********************************************************************************
+0144    0040            
+0145    0040            SeleccionarOperacion
+0146    0040            ;ch e c k
+0147    0040            	;PArte 1
+0148    0040            
+0149    0040    1807    	BTFSc PORTC,0         ;  PORTA[0] == 1
+0150    0041    284F    	goto GuardarOperacion
+0151    0042            	                ;  SAVE TRUE
+0152    0042            	                      ;  SAVE FALSE
+0153    0042    1C87    	BTFSs PORTC,1         ;  PORTA[1] == 1
+0154    0043    2840    	GOTO SeleccionarOperacion     ;  FALSE, no se le suma recursivo
+0155    0044            	                      ;  TRUE sumar
+0156    0044    3001    	MOVLW 1
+0157    0045    0088    	movwf PORTD
+0158    0046    2070    		call DELAYMACHINE
+0159    0047            
+0160    0047            
+0161    0047            	;xorlw b'00000011'; pregunto si estan en 1111
+0162    0047            SegundaParte
+0163    0047    1807    	BTFSc PORTC,0         ;  PORTA[0] == 1
+0164    0048    284F    	goto GuardarOperacion
+0165    0049            	                ;  SAVE TRUE
+0166    0049            	                      ;  SAVE FALSE
+0167    0049    1C87    	BTFSs PORTC,1         ;  PORTA[1] == 1
+0168    004A    2847    	GOTO SegundaParte     ;  FALSE, no se le suma recursivo
+0169    004B            	                      ;  TRUE sumar
+0170    004B    3002    	MOVLW 2
+0171    004C    0088    	movwf PORTD
+0172    004D            
+0173    004D    2070    	call DELAYMACHINE
+0174    004E            
+0175    004E    2840    	GOTO SeleccionarOperacion     ;  TRUE recursivo
+0176    004F            
+0177    004F            GuardarOperacion
+0178    004F            
+0179    004F    0808    	movf PORTD,W
+0180    0050    00A9    	movwf OPERACION
+0181    0051    2852    	goto RealizarOperacion
+0182    0052            
+0183    0052            ;**********************************************************************************
+0184    0052            
+0185    0052            RealizarOperacion
+0186    0052            
+0187    0052            
+0188    0052    1C08    	BTFSS PORTD,0 ; ir a suma
+0189    0053    2863    	goto Restar ; resta
+0190    0054    2856    	goto Sumar
+0191    0055            
+0192    0055    0008    	return
+0193    0056            Sumar
+0194    0056            
+0195    0056    0821    	movf NUMERO1,W
+0196    0057    0722    	ADDWF NUMERO2,0 ; w = portB - numero 1
+0197    0058    00B1    	movwf RESULTADO
+0198    0059            
+0199    0059            	;PORTC[4]=RESULTADO[0]
+0200    0059            
+0201    0059            
+0202    0059    1831    	BTFSc RESULTADO ,0
+0203    005A    1607    	bsf PORTC,4
+0204    005B            	;PORTC[5]=RESULTADO[1]
+0205    005B            
+0206    005B    18B1    	BTFSc RESULTADO ,1
+0207    005C    1687    	bsf PORTC,5
+0208    005D            
+0209    005D            ;PORTC[6]=RESULTADO[2]
+0210    005D            
+0211    005D    1931    	BTFSc RESULTADO ,2
+0212    005E    1707    	bsf PORTC,6
+0213    005F            ;PORTC[7]=RESULTADO[3]
+0214    005F    19B1    	BTFSc RESULTADO ,3
+0215    0060    1787    	bsf PORTC,7
+0216    0061    2070    	call DELAYMACHINE
+0217    0062            
+0218    0062    2871    	goto LoopFinal
+0219    0063            Restar
+0220    0063    0822    	movf NUMERO2,W
+0221    0064    0221    	SUBWF NUMERO1,0 ; w = portB - numero 1
+0222    0065    00B1    	movwf RESULTADO
+0223    0066            
+0224    0066            	;PORTC[4]=RESULTADO[0]
+0225    0066            
+0226    0066            
+0227    0066    1831    	BTFSc RESULTADO ,0
+0228    0067    1607    	bsf PORTC,4
+0229    0068            	;PORTC[5]=RESULTADO[1]
+0230    0068            
+0231    0068    18B1    	BTFSc RESULTADO ,1
+0232    0069    1687    	bsf PORTC,5
+0233    006A            
+0234    006A            ;PORTC[6]=RESULTADO[2]
+0235    006A            
+0236    006A    1931    	BTFSc RESULTADO ,2
+0237    006B    1707    	bsf PORTC,6
+0238    006C            ;PORTC[7]=RESULTADO[3]
+0239    006C    19B1    	BTFSc RESULTADO ,3
+0240    006D    1787    	bsf PORTC,7
+0241    006E    2070    	call DELAYMACHINE
+0242    006F            
+0243    006F    2871    	goto LoopFinal
+0244    0070            
+0245    0070            DELAYMACHINE
+0246    0070            	;CLRF	0X20
+0247    0070            	;BSF	0X20, 6
+0248    0070            	;BSF	0X20, 5
+0249    0070            	;BSF	0X20, 2
+0250    0070            	;CALL	DELAYMACHINE2
+0251    0070    0008    	return
+0252    0071            
+0253    0071            DELAYMACHINE2
+0254    0071            	;DECFSZ	0X20, 1
+0255    0071            	;GOTO	DELAYMACHINE2
+0256    0071            	;RETURN
+0257    0071            
+0258    0071            
+0259    0071            LoopFinal
+0260    0071            
+0261    0071    1C87    	BTFSs PORTC,1         ;  PORTA[1] == 1
+0262    0072    2871    	GOTO LoopFinal     ;  FALSE, no se le suma recursivo
+0263    0073            
+0264    0073    2801    	goto START
+0265    0074            END
+0266    0074            
+0267    0074            ;pagina 64 pdf modulo 3
 ---------------------------------------------
 Number of errors = 0

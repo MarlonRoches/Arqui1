@@ -1,0 +1,415 @@
+---------------------------------------------
+PIC ASSEMBLER LISTING
+Line    Address Opcode  Instruction
+---------------------------------------------
+0001    0000            
+0002    0000                ;CONFIG
+0003    0000            	ESTADOROTACION EQU 0x20
+0004    0000            ;1->
+0005    0000            ;2abajo
+0006    0000            ;3 <-
+0007    0000            ;4arriba
+0008    0000            	PosX EQU 0x21
+0009    0000            	PosY EQU 0x22
+0010    0000            	PiezaGenerada EQU 0x23
+0011    0000            
+0012    0000            	Fila1 EQU 0X31
+0013    0000            	Fila2 EQU 0X32
+0014    0000            	Fila3 EQU 0X33
+0015    0000            	Fila4 EQU 0X34
+0016    0000            	Fila5 EQU 0X35
+0017    0000            	Fila6 EQU 0X36
+0018    0000            
+0019    0000            
+0020    0000            	AUX1 EQU 0X3A
+0021    0000            	AUX2 EQU 0X3b
+0022    0000            
+0023    0000            
+0024    0000            	FILAS EQU  PORTC
+0025    0000            	COLUMNAS EQU PORTB
+0026    0000            
+0027    0000                                  ;  INICIO DE PROGRAMA
+0028    0000            	ORG 0
+0029    0000    2801    	GOTO START
+0030    0001            
+0031    0001                                  ;  CODIGO
+0032    0001            START
+0033    0001                                  ;  Nos Movemos a banco 1 -> status 01
+0034    0001    1683        BSF STATUS,5
+0035    0002    0185        CLRF TRISA            ;  A TODOS SON SALIDA
+0036    0003    0187        CLRF TRISC            ;  C SALIDA DE FILAS
+0037    0004    0186        CLRF TRISB            ;  B SALIDA DE COLUMNAS
+0038    0005    0188        CLRF TRISD            ;  D CLEAR
+0039    0006    0189        CLRF TRISE            ;  E CLEAR
+0040    0007            
+0041    0007            
+0042    0007    1408        BSF TRISD,0           ;  MOVER IZQUIERDA
+0043    0008    1488        BSF TRISD,1           ;  MOVER DERECHA
+0044    0009    1508        BSF TRISD,2           ;  BAJAR
+0045    000A    1588        BSF TRISD,3           ;  ROTAR
+0046    000B            
+0047    000B    1283        BCF STATUS,5        ;  limpiamos rp0, moviendonos al banco 0
+0048    000C                                    ;  seteamos todos los leds a 0 en el inicio
+0049    000C    3000        MOVLW 0
+0050    000D    0086        MOVWF PORTB         ;
+0051    000E            
+0052    000E    0087        MOVWF PORTC
+0053    000F    0088        MOVWF PORTD
+0054    0010    3000        MOVLW 0
+0055    0011    00BA        MOVWF AUX1
+0056    0012    00BB        MOVWF AUX2
+0057    0013            
+0058    0013    303F         	MOVLW b'00111111'
+0059    0014    00B1         	movwf fila1
+0060    0015    00B2    	movwf fila2
+0061    0016    00B3    	movwf fila3
+0062    0017    00B4    	movwf fila4
+0063    0018    00B5    	movwf fila5
+0064    0019    00B6    	movwf fila6
+0065    001A    3001    	MOVLW 1
+0066    001B    00A1        	movwf PosX
+0067    001C    3001        	MOVLW 1
+0068    001D    00A2        	movwf PosY
+0069    001E            
+0070    001E    281F        GOTO MENU
+0071    001F            
+0072    001F            MENU
+0073    001F                ;BTFSS PiezaGenerada ,0  ; hay una pieza generada?
+0074    001F                ;goto  NUEVAPIEZA        ; no, creala
+0075    001F                                        ; si, sigue
+0076    001F            
+0077    001F            ;generamos nueva pieza
+0078    001F    303E    	MOVLW b'111110'
+0079    0020    0087         movwf filas
+0080    0021            
+0081    0021    3001     	MOVLW b'000001'
+0082    0022    0086         movwf Columnas
+0083    0023            
+0084    0023            
+0085    0023    303E    	MOVLW b'00111110'
+0086    0024    0087         movwf filas
+0087    0025            
+0088    0025    3002     	MOVLW b'0000010'
+0089    0026    0086         movwf Columnas
+0090    0027            
+0091    0027               ;call print
+0092    0027               ;110000
+0093    0027               ;ESTADOROTACION = 1
+0094    0027               ;posx 1 011000 -32 +8 = -24
+0095    0027            
+0096    0027            	;001100 -16 +4 =-12
+0097    0027            	;001100 -8 +2 = -6
+0098    0027            	;000110 -4+1= -3
+0099    0027            	;000011 tope
+0100    0027            
+0101    0027            	;bajando datos
+0102    0027                ;MOVF Fila1, W
+0103    0027                ;MOVWF AUX1
+0104    0027                ;MOVF Fila2, W
+0105    0027                ;MOVWF AUX2
+0106    0027                ;movf AUX1,W
+0107    0027                ;IORWF AUX2, 0
+0108    0027                ;movwf Fila2
+0109    0027                ;movlw 1
+0110    0027                ;addwf PosY , 1
+0111    0027            
+0112    0027            
+0113    0027            
+0114    0027            
+0115    0027            
+0116    0027            
+0117    0027            
+0118    0027            
+0119    0027                    ;Mover Izquierda
+0120    0027    1808        BTFSc PORTD,0         ;BTN ← Activado
+0121    0028    2071            call MOVERIZQUIERDA
+0122    0029                    ;Mover Derecha
+0123    0029    1888        BTFSc PORTD,1         ;BTN → Activado
+0124    002A    2094            call MOVERDERECHA
+0125    002B            
+0126    002B            
+0127    002B                    ;Mover ABAJO
+0128    002B    1908        BTFSc PORTD,2         ;BTN ↓ Activado
+0129    002C    20B1            call MOVERABAJO
+0130    002D            
+0131    002D                    ;Rotar
+0132    002D    1988        BTFSc PORTD,3         ;BTN ↑ Activado
+0133    002E    20B2            call ROTAR
+0134    002F            
+0135    002F               ; call GRAVEDAD
+0136    002F            	;call print
+0137    002F                ;call DELAYMACHINE      ;Llamamos al delay y alli dentro imprimimos
+0138    002F            
+0139    002F    281F        GOTO MENU
+0140    0030            
+0141    0030            ;AREA TETRIS
+0142    0030            
+0143    0030            PRINT
+0144    0030            	;MOVLW b'111110'
+0145    0030                 	;movwf filas
+0146    0030            
+0147    0030             	;MOVLW b'000001'
+0148    0030                ; movwf Columnas
+0149    0030            
+0150    0030                ;→
+0151    0030    3001        MOVLW b'00000001'
+0152    0031    0086        MOVWF COLUMNAS
+0153    0032                ;↓
+0154    0032    0831        movf Fila1,w
+0155    0033    0087        MOVWF FILAS
+0156    0034                ;↓
+0157    0034    303F        MOVLW b'111111'
+0158    0035    0087        MOVWF FILAS
+0159    0036            
+0160    0036            
+0161    0036                ;→
+0162    0036    3002        MOVLW b'00000010'
+0163    0037    0086        MOVWF COLUMNAS
+0164    0038                ;↓
+0165    0038    0832        movf Fila2,w
+0166    0039    0087        MOVWF FILAS
+0167    003A                ;↓
+0168    003A    3000        MOVLW 0
+0169    003B    0087        MOVWF FILAS
+0170    003C            
+0171    003C                ;→
+0172    003C    3004        MOVLW b'00000100'
+0173    003D    0086        MOVWF COLUMNAS
+0174    003E                ;↓
+0175    003E    0833        movf Fila3,w
+0176    003F    0087        MOVWF FILAS
+0177    0040                ;↓
+0178    0040    3000        MOVLW 0
+0179    0041    0087        MOVWF FILAS
+0180    0042            
+0181    0042                ;→
+0182    0042    3008        MOVLW b'00001000'
+0183    0043    0086        MOVWF COLUMNAS
+0184    0044                ;↓
+0185    0044    0834        movf Fila4,w
+0186    0045    0087        MOVWF FILAS
+0187    0046                ;↓
+0188    0046    3000        MOVLW 0
+0189    0047    0087        MOVWF FILAS
+0190    0048            
+0191    0048                ;→
+0192    0048    3010        MOVLW b'00010000'
+0193    0049    0086        MOVWF COLUMNAS
+0194    004A                ;↓
+0195    004A    0835        movf Fila5,w
+0196    004B    0087        MOVWF FILAS
+0197    004C                ;↓
+0198    004C    3000        MOVLW 0
+0199    004D    0087        MOVWF FILAS
+0200    004E            
+0201    004E                ;→
+0202    004E    3020        MOVLW b'00100000'
+0203    004F    0086        MOVWF COLUMNAS
+0204    0050                ;↓
+0205    0050    0836        movf Fila6,w
+0206    0051    0087        MOVWF FILAS
+0207    0052                ;↓
+0208    0052    3000        MOVLW 0
+0209    0053    0087        MOVWF FILAS
+0210    0054    3000        MOVLW 0
+0211    0055    0087        MOVWF FILAS
+0212    0056            
+0213    0056    0008        return
+0214    0057            
+0215    0057            
+0216    0057            NUEVAPIEZA
+0217    0057            
+0218    0057    3001        MOVLW 1
+0219    0058    00A1        movwf PosX
+0220    0059    3001        MOVLW 1
+0221    005A    00A2        movwf PosY
+0222    005B    00A3        movwf PiezaGenerada
+0223    005C    303E        MOVLW b'111110'
+0224    005D    00B1        movwf Fila1
+0225    005E    00B2        movwf Fila2
+0226    005F    3000        MOVLW 0
+0227    0060    00BA        MOVWF AUX1
+0228    0061    00BB        MOVWF AUX2
+0229    0062            
+0230    0062                ;call DELAYMACHINE
+0231    0062            
+0232    0062    281F        goto MENU
+0233    0063            
+0234    0063                    ;IORWF f,d ;operación OR lógica, destino = W 
+0235    0063            GRAVEDAD
+0236    0063    0822        movf PosY,W         ;traemos la posicion de y y guardamos en w
+0237    0064    3A06        xorlw 6             ;preguntamos si esta en 6, que es el limite
+0238    0065    1802        BTFSC  Z, 0         ;Estas en el Limite Y=6?
+0239    0066    2870            goto GuardarPieza   ;si, guardar pieza
+0240    0067                ;no, sigue bajando--------------------------------------------------------------------
+0241    0067            
+0242    0067                ;PosY==1
+0243    0067    1831        BTFSC Fila1 ,0
+0244    0068    1432        BSF Fila2,0
+0245    0069    1AB1        BTFSC Fila1 ,5
+0246    006A    14B2        BSF Fila2,1
+0247    006B    1B31        BTFSC Fila1 ,6
+0248    006C    1532        BSF Fila2,2
+0249    006D    1BB1        BTFSC Fila1 ,7
+0250    006E    15B2        BSF Fila2,3
+0251    006F                ;PosY==2
+0252    006F                ;PosY==3
+0253    006F                ;PosY==4
+0254    006F                ;PosY==5
+0255    006F            
+0256    006F    0008        return
+0257    0070            
+0258    0070            GuardarPieza
+0259    0070            
+0260    0070    2857        goto NUEVAPIEZA;
+0261    0071            
+0262    0071            
+0263    0071            
+0264    0071            MOVERIZQUIERDA
+0265    0071            
+0266    0071    0821    	movf posx , w
+0267    0072    3A01    	xorlw 1
+0268    0073    1802    	BTFSc z,0
+0269    0074    281F    		goto Menu
+0270    0075            
+0271    0075            
+0272    0075            	;moviendo a la izquierda
+0273    0075    0831        MOVF Fila1, W
+0274    0076    00BA        MOVWF AUX1
+0275    0077            ;posx 1  y orientacion 1
+0276    0077            
+0277    0077    30E8        MOVLW -24
+0278    0078    07BA        addwf AUX1,1
+0279    0079    083A        MOVF AUX1, W ;de aux1 -> fila correspondiente
+0280    007A    3001        MOVLW 1
+0281    007B    07A1        addwf POSX,1
+0282    007C    20B8    	CALL DELAYMACHINE
+0283    007D    20B8    		CALL DELAYMACHINE
+0284    007E            
+0285    007E            ;posx 2 y orientacion 1
+0286    007E            
+0287    007E    30F4        MOVLW -12
+0288    007F    07BA        addwf AUX1,1
+0289    0080    083A        MOVF AUX1, W
+0290    0081    3001        MOVLW 1
+0291    0082    07A1        addwf POSX,1
+0292    0083    20B8    	CALL DELAYMACHINE
+0293    0084            
+0294    0084    20B8    	CALL DELAYMACHINE
+0295    0085            
+0296    0085            ;posx 3 y orientacion 1
+0297    0085            
+0298    0085    30FA        MOVLW -6
+0299    0086    07BA        addwf AUX1,1
+0300    0087    083A        MOVF AUX1, W
+0301    0088    3001        MOVLW 1
+0302    0089    07A1        addwf POSX,1
+0303    008A    20B8    	CALL DELAYMACHINE
+0304    008B            
+0305    008B    20B8    	CALL DELAYMACHINE
+0306    008C            
+0307    008C            ;posx 4 y orientacion 1
+0308    008C            
+0309    008C    30FD        MOVLW -3
+0310    008D    07BA        addwf AUX1,1
+0311    008E    083A        MOVF AUX1, W
+0312    008F    3001        MOVLW 1
+0313    0090    07A1        addwf POSX,1
+0314    0091    20B8    	CALL DELAYMACHINE
+0315    0092            
+0316    0092    20B8    	CALL DELAYMACHINE
+0317    0093            
+0318    0093            ;posx 5 y orientacion 1
+0319    0093            
+0320    0093    0008        return
+0321    0094            
+0322    0094            
+0323    0094            MOVERDERECHA
+0324    0094            	;moviendo a la derecha
+0325    0094            ;posx 5 y orientacion 1
+0326    0094    3003        MOVLW 3
+0327    0095    07BA        addwf AUX1,1
+0328    0096    083A        MOVF AUX1, W
+0329    0097    30FF        MOVLW -1
+0330    0098    07A1        addwf POSX,1
+0331    0099            
+0332    0099    20B8    	CALL DELAYMACHINE
+0333    009A    20B8    	CALL DELAYMACHINE
+0334    009B            ;posx 4 y orientacion 1
+0335    009B    3006        MOVLW 6
+0336    009C    07BA        addwf AUX1,1
+0337    009D    083A        MOVF AUX1, W
+0338    009E    30FF        MOVLW -1
+0339    009F    07A1        addwf POSX,1
+0340    00A0    20B8    	CALL DELAYMACHINE
+0341    00A1    20B8    	CALL DELAYMACHINE
+0342    00A2            ;posx 3 y orientacion 1
+0343    00A2    300C        MOVLW 12
+0344    00A3    07BA        addwf AUX1,1
+0345    00A4    083A        MOVF AUX1, W
+0346    00A5    30FF        MOVLW -1
+0347    00A6    07A1        addwf POSX,1
+0348    00A7    20B8    	CALL DELAYMACHINE
+0349    00A8    20B8    	CALL DELAYMACHINE
+0350    00A9            ;posx 2 y orientacion 1
+0351    00A9    3018        MOVLW +24
+0352    00AA    07BA        addwf AUX1,1
+0353    00AB    083A        MOVF AUX1, W
+0354    00AC    30FF        MOVLW -1
+0355    00AD    07A1        addwf POSX,1
+0356    00AE    20B8    	CALL DELAYMACHINE
+0357    00AF    20B8    	CALL DELAYMACHINE
+0358    00B0            ;posx 1  y orientacion 1
+0359    00B0    0008        return
+0360    00B1            
+0361    00B1            MOVERABAJO
+0362    00B1                ;Hay pieza abajo?
+0363    00B1                ;return
+0364    00B1                ;PosY ==6? Es decir, alcanzo el limite?
+0365    00B1                ;return
+0366    00B1                ;mover
+0367    00B1    0008        return
+0368    00B2            
+0369    00B2            ROTAR
+0370    00B2                ;primera rotacion
+0371    00B2    0820        movf ESTADOROTACION , W
+0372    00B3    3A01        xorlw 1
+0373    00B4    1C02        BTFSS Z, 0 ; si es uno
+0374    00B5            
+0375    00B5    0008        return
+0376    00B6            
+0377    00B6            FINDEJUEGO
+0378    00B6    20B8        call DELAYMACHINE
+0379    00B7    28B6        goto FINDEJUEGO
+0380    00B8            
+0381    00B8            ;END AREA TETRIS
+0382    00B8            
+0383    00B8            
+0384    00B8            
+0385    00B8            
+0386    00B8            DELAYMACHINE
+0387    00B8    01D0        CLRF	0X50
+0388    00B9    1750        BSF	0X50, 6
+0389    00BA    16D0        BSF	0X50, 5
+0390    00BB    1550        BSF	0X50, 2
+0391    00BC    2030        call PRINT
+0392    00BD    20BF        CALL	DELAYMACHINE2
+0393    00BE    0008        return
+0394    00BF            
+0395    00BF            DELAYMACHINE2
+0396    00BF    0BD0        DECFSZ	0X50, 1
+0397    00C0    2030        call PRINT
+0398    00C1    28BF        GOTO	DELAYMACHINE2
+0399    00C2    0008        RETURN
+0400    00C3            
+0401    00C3            
+0402    00C3            LoopFinal
+0403    00C3    1C87        BTFSS PORTC,1         ;  PORTA[1] == 1
+0404    00C4    28C3        GOTO LoopFinal     ;  FALSE, no se le suma recursivo
+0405    00C5            
+0406    00C5    2801        goto START
+0407    00C6                END
+0408    00C6            
+0409    00C6            ;pagina 64 pdf modulo 3
+---------------------------------------------
+Number of errors = 0
