@@ -1,4 +1,4 @@
-	;  CONFIGURACION
+	;  CONFIGURACION DE VARIABLES
 	ContrasenaIngresada EQU 0x21
 	ContrasenaADMIN 	EQU 0x22
 	Reg_Contrasena1 	EQU 0x23
@@ -15,7 +15,9 @@
 	GOTO START
 
 	;  CODIGO
+
 START
+	;CONFIGURACIÓN DE BANCOS DE MEMORIA INTERNA 
 	BSF STATUS,5
 	;---------------------------------------------------------------------------
 	CLRF TRISB            ;  SALIDA PARA Contrasena e Intentos
