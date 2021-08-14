@@ -17,7 +17,6 @@
 
 	;  CODIGO
 START
-
 	BSF STATUS,5
 	;---------------------------------------------------------------------------
 	CLRF TRISB            ;  SALIDA PARA Contrasena e Intentos
@@ -35,7 +34,6 @@ START
 	BCF TRISD,2 		  ;  LED MODO USO
 	BCF TRISD,3 		  ;  LED MODO ADMIN
 	;---------------------------------------------------------------------------
-
 	BCF STATUS,5
 	MOVLW b'00001011'
 	MOVWF ContrasenaADMIN ;  CONTRAS DEFAULT
@@ -48,34 +46,26 @@ START
 		GOTO MENU
 
 MENU
-
 	;Verde
 	BcF PORTD, 3
 	;Azul
 	BcF PORTD, 2
 	call megadelay
 	call megadelay
-
 	;->->->Ir a Modo ADMIN
 	BTFSC PORTD,0
 		goto MODOADMIN
-
-
 	;->->->Ir a Caja Fuerte
 	BTFSC PORTD,1
 		goto MODOCAJA
-
-
 
 	;Verde
 	BSF PORTD, 3
 
 	;azul
 	BSF PORTD, 2
-
 	movlw b'10101111'
 	movwf PORTB
-
 
 	call megadelay
 	call megadelay
@@ -136,7 +126,6 @@ OBTENERCONTRSENA
 	call megadelay
 	BsF portB,4
 	
-
 	;->->-> Siguiente
 	BTFSC PORTD,1
 		RETURN
