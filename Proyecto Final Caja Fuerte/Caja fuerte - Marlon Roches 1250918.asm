@@ -2,7 +2,7 @@
 	ContrasenaIngresada EQU 0x21
 	ContrasenaADMIN 	EQU 0x22
 	Reg_Contrasena1 	EQU 0x23
-	Reg_Contrasena2 	EQU 0X24
+	Reg_Contrasena2 	EQU 0x24
 	Reg_Contrasena3 	EQU 0x25
 	Reg_Contrasena4 	EQU 0x26
 	Reg_Contrasena5 	EQU 0x27
