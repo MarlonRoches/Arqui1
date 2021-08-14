@@ -10,7 +10,6 @@
 	ConteoTotal 		EQU 0x29
 	TIMER 			EQU 0X30
 
-
 	;  INICIO DEL PROGRAMA
 	ORG 0x00
 	GOTO START
